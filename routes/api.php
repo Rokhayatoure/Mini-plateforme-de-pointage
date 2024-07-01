@@ -27,7 +27,7 @@ Route::post('/enregistrerArrivee',[HoraireController::class,'enregistrerArrivee'
 Route::post('/enregistrerSortie',[HoraireController::class,'enregistrerSortie']);
 Route::get('/listeUtilisateurPresent',[HoraireController::class,'listeUtilisateurPresent']);
 Route::post('/envoyermessane',[MessageController::class,'Message']);
-Route::get('/listMessane/{id}',[MessageController::class,'ListMessage']);
+Route::get('/listMessane',[MessageController::class,'ListMessage']);
 // Route::groupe([
 //     'Middleware'=> ["auth:api"]
 // ],function()[

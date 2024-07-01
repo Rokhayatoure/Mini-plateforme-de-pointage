@@ -11,10 +11,10 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function Message(Request $request,) {
+    public function Message(Request $request,$userId) {
         $validator = Validator::make($request->all(), [
             'contenue' => ['required', 'string', 'min:4', 'regex:/^[a-zA-Z]+$/'],
-            'ussrId' => ['required','integer',],
+            'userId' => ['required','integer',],
             
         ]); 
 
