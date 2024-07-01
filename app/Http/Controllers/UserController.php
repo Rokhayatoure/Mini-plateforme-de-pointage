@@ -119,7 +119,7 @@ class UserController extends Controller
     // Récupérer l'ID du rôle "admin"
     $adminRoleId = DB::table('roles')->where('nomRole', 'admin')->value('id');
     // $Rolenom = DB::table('roles')->value('nomRole');
-
+       
     // Récupérer tous les utilisateurs sauf l'admin
     $users = User::where('roleId', '!=', $adminRoleId)->get();
      foreach($users as $user){
@@ -128,7 +128,7 @@ class UserController extends Controller
             'name' => $user->name,
             'prenom' => $user->prenom,
            
-            'nomRole' => $user->roleId->nomRole,
+            'nomRole' => $user->role->nomRole,
             'email' => $user->email,
         ];
 
