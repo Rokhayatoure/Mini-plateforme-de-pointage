@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('horaires', function (Blueprint $table) {
             $table->id();
             
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('userId');
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
             $table->boolean('arriver')->default(false);
             $table->boolean('descente')->default(false);
             $table->dateTime('date')->nullable();

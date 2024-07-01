@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_role');
-            $table->boolean('est_archiver')->default(false);
+            $table->string('nomRole');
+            $table->boolean('estArchiver')->default(false);
 
             $table->timestamps();
         });

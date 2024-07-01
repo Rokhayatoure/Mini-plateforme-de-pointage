@@ -14,16 +14,16 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $adminRole = Role::where('nom_role', 'admin')->first();
+        $adminRole = Role::where('nomRole', 'admin')->first();
 
         if ($adminRole) {
             User::factory()->create([
                 'name' => 'Dia',
                 'prenom' => 'admin',
                 'email' => 'admin@gmail.com',
-                'numero_telephone' => '+221774003030',
+                'numeroTelephone' => '+221774003030',
                 'password' => bcrypt('admin@123'),
-                'role_id' => $adminRole->id,
+                'roleId' => $adminRole->id,
             ]);
         } else {
             $this->command->info('Le rôle "admin" n\'a pas été trouvé. Assurez-vous qu\'il existe dans la table des rôles.');

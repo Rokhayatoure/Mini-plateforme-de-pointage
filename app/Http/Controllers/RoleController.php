@@ -18,7 +18,7 @@ class RoleController extends Controller
     {
        // Validation des données reçues
     $validator = Validator::make($request->all(), [
-        'nom_role' => ['required', 'string', 'regex:/^[a-zA-Z]+$/'],
+        'nomRole' => ['required', 'string', 'regex:/^[a-zA-Z]+$/'],
     ]);
 
     // Vérification des erreurs de validation
@@ -29,7 +29,7 @@ class RoleController extends Controller
     try {
         // Création et sauvegarde du nouveau rôle
         $role = new Role([
-            'nom_role' => $request->nom_role,
+            'nomRole' => $request->nomRole,
         ]);
         $role->save();
 
@@ -59,7 +59,7 @@ class RoleController extends Controller
     public function  ModifierRole(Request $request,$id)
     {
         $request->validate([
-            'nom_role' => 'required',
+            'nomRole' => 'required',
         ]);
   
         $role = Role::find($id);
@@ -75,7 +75,7 @@ class RoleController extends Controller
         }
     
         // Débloquer l'utilisateur
-       $role->est_archiver= true;
+       $role->estArchiver= true;
        $role->save();
     
         return response()->json([

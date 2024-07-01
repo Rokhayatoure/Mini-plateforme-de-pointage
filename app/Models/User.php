@@ -24,10 +24,10 @@ class User extends Authenticatable implements JWTSubject
         'prenom',
         'email',
         'password',
-        'numero_telephone',
-        'est_present',
-        'est_archiver',
-        'role_id',
+        'numeroTelephone',
+        'estPresent',
+        'estArchiver',
+        'roleId',
         // 'horaire_id',
 
     ];

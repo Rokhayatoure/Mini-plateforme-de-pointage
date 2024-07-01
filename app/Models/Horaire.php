@@ -14,7 +14,7 @@ class Horaire extends Model
         'arriver',
         'descente',
         'heur',
-        'user_id'
+        'userId'
 
     
         

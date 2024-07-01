@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Horaire;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class HoraireController extends Controller
@@ -15,26 +17,26 @@ class HoraireController extends Controller
     public function enregistrerArrivee(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => ['required', 'exists:users,id'],
+            'userId' => ['required', 'exists:users,id'],
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $user_id = $request->user_id;
+        $userId = $request->userId;
         $date = Carbon::now()->format('Y-m-d');
         
         $heure=date('H:i:s');
 // dd($heure);
-        $horaire = Horaire::where('user_id', $user_id)->where('date', $date)->first();
+        $horaire = Horaire::where('userId', $userId)->where('date', $date)->first();
 
         if ($horaire) {
             return response()->json(['message' => 'Vous avez déjà pointé votre arrivée aujourd\'hui.'], 400);
         }
 
         $horaire = new Horaire([
-            'user_id' => $user_id,
+            'userId' => $userId,
             'arriver' => true,
             'date' => $date,
              'heur' => $heure,
@@ -52,17 +54,17 @@ class HoraireController extends Controller
     {
       
         $validator = Validator::make($request->all(), [
-            'user_id' => ['required', 'exists:users,id'],
+            'userId' => ['required', 'exists:users,id'],
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $user_id = $request->user_id;
+        $userId = $request->userId;
         $date = Carbon::now()->format('Y-m-d');
 
-        $horaire = Horaire::where('user_id', $user_id)->where('date', $date)->first();
+        $horaire = Horaire::where('userId', $userId)->where('date', $date)->first();
 
         if (!$horaire) {
             return response()->json(['message' => 'Vous devez pointer votre arrivée avant de pointer votre sortie.'], 400);
@@ -76,7 +78,7 @@ class HoraireController extends Controller
         // dd('ok');
 
         $horaire = new Horaire([
-            'user_id' => $user_id,
+            'userId' => $userId,
             'descente' => true,
             'date' => $date,
              'heur' => $heure,
@@ -89,10 +91,23 @@ class HoraireController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    // public function listeUtilisateurPresent(Request $request)
+    // {
+    //      // Récupérer l'ID du rôle "admin"
+    // $userPresent = DB::table('Horaire')->where('arriver', 'true')->value('id');
+
+    // // Récupérer tous les utilisateurs pointer 
+    // $users = User::where('arriver', '=',   $userPresent)->get();
+    // $listUser=[];
+    // foreach($users as $user){
+    //     $listUser[]=[
+
+
+    //     ];
+    // }
+
+    // return response()->json(compact('users'), 200);
+    // }
 
     /**
      * Display the specified resource.

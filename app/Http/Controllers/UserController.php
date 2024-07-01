@@ -19,9 +19,9 @@ class UserController extends Controller
             'name' => ['required', 'string', 'min:4', 'regex:/^[a-zA-Z]+$/'],
             'prenom' => ['required', 'string', 'min:4', 'regex:/^[a-zA-Z]+$/'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'numero_telephone' => ['required', 'string', 'regex:/^(\+221|221)?[76|77|78|70|33]\d{8}$/'],
-            'role_id' => ['required','integer',],
-            'horaire_id' => ['required','integer',],
+            'numeroTelephone' => ['required', 'string', 'regex:/^(\+221|221)?[76|77|78|70|33]\d{8}$/'],
+            'roleId' => ['required','integer',],
+            'horaireId' => ['required','integer',],
             'password' => ['required', 'string', 'min:8'],
 
         ]); 
@@ -36,9 +36,9 @@ class UserController extends Controller
             'prenom' => $request->prenom,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-             'numero_telephone' => $request->numero_telephone,
-             'role_id' => $request->role_id ,
-            'horaire_id' => $request->horaire_id
+             'numeroTelephone' => $request->numeroTelephone,
+             'roleId' => $request->roleId ,
+            'horaireId' => $request->horaireId
           
         ]);
     
@@ -78,7 +78,7 @@ class UserController extends Controller
         $user = Auth::user();
 
         // Vérification si l'utilisateur est bloqué
-        // if ($user && $user->est_bloquer) {
+        // if ($user && $user->estAloquer) {
         //     return response()->json([
         //         "status" => false,
         //         "message" => "Votre compte est bloqué. Veuillez contacter l'administrateur.",
@@ -115,19 +115,46 @@ class UserController extends Controller
     public function listeUtilisateur()
 {
     // Récupérer l'ID du rôle "admin"
-    $adminRoleId = DB::table('roles')->where('nom_role', 'admin')->value('id');
+    $adminRoleId = DB::table('roles')->where('nomRole', 'admin')->value('id');
 
     // Récupérer tous les utilisateurs sauf l'admin
-    $users = User::where('role_id', '!=', $adminRoleId)->get();
+    $users = User::where('roleId', '!=', $adminRoleId)->get();
 
     return response()->json(compact('users'), 200);
 }
-public function listeUtilisateurPresent(){
+
+public function ArchiverUtilisateur(Request $request ,$id ){
+   
+{
+    $user = User::find($id);
+
+ // Débloquer l'utilisateur
+   $user->estArchiver= true;
+   $user->save();
+
+    return response()->json([
+        'status' => true,
+        'message' => "cette utilisateur  a ete archiver  avec succès.",
+        
+        'user' =>$user,
+    ]);
+}
+}
+
+public function ListeUtilisateurArchiver(Request $request )
+{
+    $user =User::where('estArchiver', true)->get();
+    // $annoncesPubliees = Annonce::where('is_published', true)->get();
+
+    // dd($user);
+
+    return response()->json(compact('user'), 200);
 
 }
 
-public function pointage(Request $request){
 
-}
+// public function pointage(Request $request){
+
+// }
 
 }
