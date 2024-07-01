@@ -4,15 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function Message(Request $request,) {
+        $validator = Validator::make($request->all(), [
+            'contenue' => ['required', 'string', 'min:4', 'regex:/^[a-zA-Z]+$/'],
+            'ussrId' => ['required','integer',],
+            
+        ]); 
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+    
+        
+        $message = new Message([
+            'contenue' => $request->contenu,
+             'userId' => $request->roleId ,
+             ]);
+    
+        // Gérer l'upload de l'image
+        
+        $message->save();
+    
+        return response()->json([
+            "status" => true,
+            "message" => "utilisateur inscrit avec succes ",
+            'message'=>$message
+        ],200);
+    }
+    public function ListMessage(Request $request,$id)
     {
-        //
+        $message=Message::find($id);
+        return response()->json([compact('message') ],200);
     }
 
     /**

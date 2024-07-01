@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HoraireController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use GuzzleHttp\Middleware;
@@ -24,6 +25,8 @@ Route::get('/listeUtilisateurPresent',[UserController::class,'listeUtilisateurPr
 Route::post('/enregistrerArrivee',[HoraireController::class,'enregistrerArrivee']);
 Route::post('/enregistrerSortie',[HoraireController::class,'enregistrerSortie']);
 Route::post('/listeUtilisateurPresent',[HoraireController::class,'listeUtilisateurPresent']);
+Route::post('/envoyermessane',[MessageController::class,'Message']);
+Route::get('/listMessane/{id}',[MessageController::class,'ListMessage']);
 // Route::groupe([
 //     'Middleware'=> ["auth:api"]
 // ],function()[
