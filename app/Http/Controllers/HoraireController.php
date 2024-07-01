@@ -16,6 +16,7 @@ class HoraireController extends Controller
      */
     public function enregistrerArrivee(Request $request)
     {
+        dd('ok');
         $validator = Validator::make($request->all(), [
             'userId' => ['required', 'exists:users,id'],
         ]);
