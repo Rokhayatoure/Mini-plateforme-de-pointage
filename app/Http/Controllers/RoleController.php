@@ -54,13 +54,15 @@ class RoleController extends Controller
      */
     public function  ModifierRole(Request $request, $id)
     {
-        $request->validate([
-            'nomRole' => 'required',
-        ]);
+        
 
         $role = Role::find($id);
+        $role->nomRole=$request->nomRole;
+         dd($role);
+// $user->telephone = $request->telephone;
+
         $role->update();
-        return response()->json(['message' => 'Rôle ajouté avec succès', 'role' => $role], 200);
+        return response()->json(['message' => 'Rôle modifier  avec succès', 'role' => $role], 200);
     }
     public function archiverRole(Request $request, $id)
     {

@@ -101,21 +101,34 @@ class HoraireController extends Controller
     // $listUser=[];
     // foreach($users as $user){
     //     $listUser[]=[
-
+    //         'id' => $users->id,
+    //         'name' => $users->name,
+    //         'prenom' => $users->prenom,
+    //         'date' => $users->horaire->date,
+    //         'heur' => $users->horaire->heur,
+        
 
     //     ];
+    //     return response()->json(['user' =>  $listUser]);
+
     // }
 
     // return response()->json(compact('users'), 200);
     // }
+    public static function listeUtilisateurPresent()
+    {
+        $utilisateursPresent = User::utilisaterPresent();
+        return  response()->json(compact('utilisateursPresent'));
+    }
 
     /**
      * Display the specified resource.
      */
-    public function show(Horaire $horaire)
-    {
-        //
-    }
+    // public static function utilisateursAbsent()
+    // {
+    //     $utilisateursPresent = User::utilisateursPresent();
+    //     return view('utilisateurs.present', compact('utilisateursPresent'));
+    // }
 
     /**
      * Show the form for editing the specified resource.

@@ -25,7 +25,7 @@ Route::get('/listeUtilisateur',[UserController::class,'listeUtilisateur']);
 Route::get('/listeUtilisateurPresent',[UserController::class,'listeUtilisateurPresent']);
 Route::post('/enregistrerArrivee',[HoraireController::class,'enregistrerArrivee']);
 Route::post('/enregistrerSortie',[HoraireController::class,'enregistrerSortie']);
-Route::post('/listeUtilisateurPresent',[HoraireController::class,'listeUtilisateurPresent']);
+Route::get('/listeUtilisateurPresent',[HoraireController::class,'listeUtilisateurPresent']);
 Route::post('/envoyermessane',[MessageController::class,'Message']);
 Route::get('/listMessane/{id}',[MessageController::class,'ListMessage']);
 // Route::groupe([

@@ -114,13 +114,27 @@ class UserController extends Controller
 
     public function listeUtilisateur()
 {
+
+    $ListUser=[] ;
     // Récupérer l'ID du rôle "admin"
     $adminRoleId = DB::table('roles')->where('nomRole', 'admin')->value('id');
+    // $Rolenom = DB::table('roles')->value('nomRole');
 
     // Récupérer tous les utilisateurs sauf l'admin
     $users = User::where('roleId', '!=', $adminRoleId)->get();
+     foreach($users as $user){
+        $ListUser[] = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'prenom' => $user->prenom,
+           
+            'nomRole' => $user->roleId->nomRole,
+            'email' => $user->email,
+        ];
 
-    return response()->json(compact('users'), 200);
+     }
+
+    return response()->json(compact('ListUser',), 200);
 }
 
 public function ArchiverUtilisateur(Request $request ,$id ){
