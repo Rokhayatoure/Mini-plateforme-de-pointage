@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-Route::post('/AjoutRole',[RoleController::class,'AjoutRole']);
+Route::post('/AjoutRole',[RoleController::class,'ajouterRole']);
+
 Route::get('/listeRole',[RoleController::class,'listeRole']);
 Route::put('/ModifierRole/{id}',[RoleController::class,'ModifierRole']);
 Route::put('/ArchiverRole/{id}',[RoleController::class,'archiverRole']);
