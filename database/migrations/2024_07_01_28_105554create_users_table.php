@@ -14,8 +14,18 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('prenom');
+            // $table->string('image')->nullable();
+            // $table->string('adresse')->nullable();
+            $table->string('numero_telephone');
+            $table->boolean('est_present')->default(false);
+            $table->boolean('est_archiver')->default(false);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            // $table->unsignedBigInteger('horaire_id');
+            // $table->foreign('horaire_id')->references('id')->on('horaires')->onDelete('cascade');
+            $table->unsignedBigInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
