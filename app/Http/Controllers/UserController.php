@@ -122,19 +122,9 @@ class UserController extends Controller
 
     // Récupérer tous les utilisateurs sauf l'admin
     $users = User::where('roleId', '!=', $adminRoleId)->get();
-     foreach($users as $user){
-        $ListUser[] = [
-            'id' => $user->id,
-            'name' => $user->name,
-            'prenom' => $user->prenom,
-           
-            'nomRole' => $user->roleId->nomRole,
-            'email' => $user->email,
-        ];
+    
 
-     }
-
-    return response()->json(compact('ListUser',), 200);
+    return response()->json(compact('users',), 200);
 }
 
 public function ArchiverUtilisateur(Request $request ,$id ){
