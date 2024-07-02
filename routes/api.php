@@ -23,11 +23,11 @@ Route::post('/connexion',[UserController::class,'connexion']);
 Route::post('/deconnexion',[UserController::class,'deconnexion']);
 Route::get('/listeUtilisateur',[UserController::class,'listeUtilisateur']);
 Route::get('/listeUtilisateurPresent',[UserController::class,'listeUtilisateurPresent']);
-Route::post('/enregistrerArrivee',[HoraireController::class,'enregistrerArrivee']);
-Route::post('/enregistrerSortie',[HoraireController::class,'enregistrerSortie']);
-Route::get('/listeUtilisateurPresent',[HoraireController::class,'listeUtilisateurPresent']);
+Route::post('/enregistrerArrive',[HoraireController::class,'enregistreerArrivee']);
+Route::post('/enregistrerSorti',[HoraireController::class,'enregistrerSortie']);
+Route::get('/listeUtilisateurPresent/{id}',[HoraireController::class,'listeUtilisateurPresent']);
 Route::post('/envoyermessane',[MessageController::class,'Message']);
-Route::get('/listMessane',[MessageController::class,'ListMessage']);
+Route::get('/listMessage',[MessageController::class,'ListMessage']);
 // Route::groupe([
 //     'Middleware'=> ["auth:api"]
 // ],function()[

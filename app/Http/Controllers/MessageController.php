@@ -11,9 +11,9 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function Message(Request $request,$userId) {
+    public function Message(Request $request) {
         $validator = Validator::make($request->all(), [
-            'contenue' => ['required', 'string', 'min:4', 'regex:/^[a-zA-Z]+$/'],
+            'contenue' => ['required', 'string', 'min:4', ],
             'userId' => ['required','integer',],
             
         ]); 
@@ -24,8 +24,8 @@ class MessageController extends Controller
     
         
         $message = new Message([
-            'contenue' => $request->contenu,
-             'userId' => $request->roleId ,
+            'contenue' => $request->contenue,
+             'userId' => $request->userId ,
              ]);
     
         // Gérer l'upload de l'image
@@ -38,9 +38,9 @@ class MessageController extends Controller
             'message'=>$message
         ],200);
     }
-    public function ListMessage(Request $request,$id)
+    public function ListMessage(Request $request)
     {
-        $message=Message::find($id);
+        $message=Message::all();
         return response()->json([compact('message') ],200);
     }
 

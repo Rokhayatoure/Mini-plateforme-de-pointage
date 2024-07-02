@@ -59,15 +59,18 @@ class User extends Authenticatable implements JWTSubject
             ->get();
     }
 
-    public static function utilisaterPresent()
+    public static function utilisatetilisrPresent($id)
     {
-        return User::leftJoin('horaires', function ($join) {
-                $join->on('users.id', '=', 'horaires.userId')
-                    ->where('horaires.arriver', true);
-            })
-            ->whereNull('horaires.id') // Utilisateurs sans horaire d'arrivée vrai
+
+        return User::leftJoin('horaires', function ($join) use ($id) {
+            $join->on('users.id', '=', 'horaires.userId')
+                ->where('horaires.arriver', true)
+                ->where('users.id', $id);
+        })
+            
+            // ->whereNull('horaires.id') // Utilisateurs sans horaire d'arrivée vrai
             ->select('users.name', 'users.prenom', 'horaires.date as date_arrivee', 'horaires.heur as heure_arrivee', 'horaires.created_at as date_depart', 'horaires.heur as heure_depart')
-            ->get();
+            ->find($id);
     }
     /**
      * The attributes that should be hidden for serialization.

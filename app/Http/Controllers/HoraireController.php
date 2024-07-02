@@ -110,26 +110,27 @@ class HoraireController extends Controller
         
 
     //     ];
-    //     return response()->json(['user' =>  $listUser]);
+    //     // return response()->json(['user' =>  $listUser]);
 
     // }
 
     // return response()->json(compact('users'), 200);
     // }
-    public static function listeUtilisateurPresent()
-    {
-        $utilisateursPresent = User::utilisaterPresent();
-        return  response()->json(compact('utilisateursPresent'));
-    }
+    // public static function listeUtilisateurPresent(Request $request,$id)
+    // {
+    //     $utilisateursPresent = User::utilisaterPresent($id);
+    //     return  response()->json(compact('utilisateursPresent'));
+    // }
 
     /**
      * Display the specified resource.
      */
-    // public static function utilisateursAbsent()
-    // {
-    //     $utilisateursPresent = User::utilisateursPresent();
-    //     return view('utilisateurs.present', compact('utilisateursPresent'));
-    // }
+    public static function listeUtilisateurPresent($id)
+    {
+        $utilisateursPresent = User::utilisatetilisrPresent($id);
+
+        return response()->json( compact('utilisateursPresent'));
+    }
 
     /**
      * Show the form for editing the specified resource.
