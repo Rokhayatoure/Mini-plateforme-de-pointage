@@ -23,9 +23,12 @@ Route::post('/connexion',[UserController::class,'connexion']);
 Route::post('/deconnexion',[UserController::class,'deconnexion']);
 Route::get('/listeUtilisateur',[UserController::class,'listeUtilisateur']);
 Route::get('/listeUtilisateurPresent',[UserController::class,'listeUtilisateurPresent']);
-Route::post('/enregistrerArrive',[HoraireController::class,'enregistreerArrivee']);
+Route::post('/enregistrerArrive',[HoraireController::class,'enregistrerArrivee']);
 Route::post('/enregistrerSorti',[HoraireController::class,'enregistrerSortie']);
+Route::put('/modifierArriver/{id}',[HoraireController::class,'modifierHoreireArriver']);
+Route::put('/modifierSortie/{id}',[HoraireController::class,'modifierHoreireSortie']);
 Route::get('/listeUtilisateurPresent/{id}',[HoraireController::class,'listeUtilisateurPresent']);
+Route::get('/listDesHorairdeSorti/{id}',[HoraireController::class,'listDesHorairdeSortie']);
 Route::post('/envoyermessane',[MessageController::class,'Message']);
 Route::get('/listMessage',[MessageController::class,'ListMessage']);
 // Route::groupe([

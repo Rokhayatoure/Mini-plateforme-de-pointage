@@ -20,33 +20,33 @@ class HoraireController extends Controller
         $validator = Validator::make($request->all(), [
             'userId' => ['required', 'exists:users,id'],
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-
+    
         $userId = $request->userId;
         $date = Carbon::now()->format('Y-m-d');
-        
-        $heure=date('H:i:s');
-// dd($heure);
+        $heure = Carbon::now()->format('H:i:s'); // Utiliser Carbon pour obtenir l'heure actuelle
+    
         $horaire = Horaire::where('userId', $userId)->where('date', $date)->first();
-
+    
         if ($horaire) {
             return response()->json(['message' => 'Vous avez déjà pointé votre arrivée aujourd\'hui.'], 400);
         }
-
+    
         $horaire = new Horaire([
             'userId' => $userId,
             'arriver' => true,
-            'date' => $date,
-             'heur' => $heure,
+            'date' => $date, // Correction ici pour utiliser le bon champ de date
+            'heurArriver' => $heure, // Utiliser le champ correct pour l'heure d'arrivée
         ]);
-
+    
         $horaire->save();
-
+    
         return response()->json(['message' => 'Pointage d\'arrivée enregistré avec succès', 'horaire' => $horaire], 200);
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -74,7 +74,7 @@ class HoraireController extends Controller
         if ($horaire->descente) {
             return response()->json(['message' => 'Vous avez déjà pointé votre sortie aujourd\'hui.'], 400);
         }
-        $heure=date('H:i:s');
+        $heure= Carbon::now()->format('H:i:s');
         //   dd($heure);
         // dd('ok');
 
@@ -82,13 +82,115 @@ class HoraireController extends Controller
             'userId' => $userId,
             'descente' => true,
             'date' => $date,
-             'heur' => $heure,
+             'heurSortie' => $heure,
         ]);
         $horaire->save();
 
         return response()->json(['message' => 'Pointage de sortie enregistré avec succès', 'horaire' => $horaire], 200);
     }
 
+
+    public function modifierHoreireArriver(Request $request, $id)
+    {
+        try {
+            // Valider les données de la requête
+            $validatedData = $request->validate([
+                'date' => 'required|date',
+                // 'arriver' => 'required|boolean',
+                // 'descente' => 'required|boolean',
+                'heurArriver' => 'required|',
+                // 'heurSortie' => 'required|',
+            ]);
+            // dd('ok');
+            // dd($request->validate());
+
+            // Trouver l'horaire par ID
+            $horaire = Horaire::find($id);
+    
+            // Vérifier si l'horaire existe
+            if (!$horaire) {
+                return response()->json([
+                    "status" => false,
+                    "message" => "Horaire non trouvé"
+                ], 404);
+            }
+    
+            // Mettre à jour les champs
+            $horaire->date = $validatedData['date'];
+            // $horaire->arriver = $validatedData['arriver'];
+            // $horaire->descente = $validatedData['descente'];
+            $horaire->heurArriver = $validatedData['heurArriver'];
+            // $horaire->heurSortie = $validatedData['heurSortie'];
+    
+            // Enregistrer les modifications
+            $horaire->save();
+    
+            // Retourner la réponse
+            return response()->json([
+                "status" => true,
+                "message" => "Modification réussie avec succès",
+                'horaire' => $horaire
+            ], 200);
+        } catch (\Exception $e) {
+            // Gérer les exceptions et retourner une réponse avec un statut 500
+            return response()->json([
+                "status" => false,
+                "message" => "Erreur interne du serveur",
+                "error" => $e->getMessage()
+            ], 500);
+        }
+    }
+    public function modifierHoreireSortie(Request $request, $id)
+    {
+        try {
+            // Valider les données de la requête
+            $validatedData = $request->validate([
+                'date' => 'required|date',
+                // 'arriver' => 'required|boolean',
+                // 'descente' => 'required|boolean',
+                // 'heurArriver' => 'required|',
+                'heurSortie' => 'required|',
+            ]);
+            // dd('ok');
+            // dd($request->validate());
+
+            // Trouver l'horaire par ID
+            $horaire = Horaire::find($id);
+    
+            // Vérifier si l'horaire existe
+            if (!$horaire) {
+                return response()->json([
+                    "status" => false,
+                    "message" => "Horaire non trouvé"
+                ], 404);
+            }
+    
+            // Mettre à jour les champs
+            $horaire->date = $validatedData['date'];
+            // $horaire->arriver = $validatedData['arriver'];
+            // $horaire->descente = $validatedData['descente'];
+            // $horaire->heurArriver = $validatedData['heurArriver'];
+            $horaire->heurSortie = $validatedData['heurSortie'];
+    
+            // Enregistrer les modifications
+            $horaire->save();
+    
+            // Retourner la réponse
+            return response()->json([
+                "status" => true,
+                "message" => "Modification réussie avec succès",
+                'horaire' => $horaire
+            ], 200);
+        } catch (\Exception $e) {
+            // Gérer les exceptions et retourner une réponse avec un statut 500
+            return response()->json([
+                "status" => false,
+                "message" => "Erreur interne du serveur",
+                "error" => $e->getMessage()
+            ], 500);
+        }
+    }
+    
     /**
      * Store a newly created resource in storage.
      */
@@ -127,9 +229,15 @@ class HoraireController extends Controller
      */
     public static function listeUtilisateurPresent($id)
     {
-        $utilisateursPresent = User::utilisatetilisrPresent($id);
-
-        return response()->json( compact('utilisateursPresent'));
+        $utilisateursPresent = User::utilisateursPresent($id);
+    
+        return response()->json(compact('utilisateursPresent'));
+    }
+    public static function listDesHorairdeSortie($id)
+    {
+        $utilisateursPresent = User::heurSortie($id);
+    
+        return response()->json(compact('utilisateursPresent'));
     }
 
     /**

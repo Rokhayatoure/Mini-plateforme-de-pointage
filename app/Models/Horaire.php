@@ -13,12 +13,10 @@ class Horaire extends Model
         'date',
         'arriver',
         'descente',
-        'heur',
+        'heurArriver',
+        'heurSortie',
         'userId'
-
-    
-        
-    ];
+];
     public function User()
     {
         return $this->belongsTo(User::class);

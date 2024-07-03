@@ -17,7 +17,7 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'nom_role' => $this->faker->word,
+            'nomRole' => $this->faker->word,
         ];
     }
 }

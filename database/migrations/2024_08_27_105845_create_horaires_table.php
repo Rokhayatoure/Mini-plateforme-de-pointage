@@ -10,19 +10,21 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('horaires', function (Blueprint $table) {
-            $table->id();
-            
-            $table->unsignedBigInteger('userId');
-            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
-            $table->boolean('arriver')->default(false);
-            $table->boolean('descente')->default(false);
-            $table->dateTime('date')->nullable();
-            $table->time('heur')->nullable();
-            $table->timestamps();
-        });
-    }
+{
+    Schema::create('horaires', function (Blueprint $table) {
+        $table->id();
+        
+        $table->unsignedBigInteger('userId');
+        $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
+        $table->boolean('arriver')->default(false);
+        $table->boolean('descente')->default(false);
+        $table->dateTime('date')->nullable();
+        $table->time('heurArriver')->nullable();
+        $table->time('heurSortie')->nullable();
+        $table->timestamps();
+    });
+}
+
 
     /**
      * Reverse the migrations.
